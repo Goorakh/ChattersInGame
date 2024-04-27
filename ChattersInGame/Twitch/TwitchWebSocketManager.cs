@@ -22,7 +22,7 @@ namespace ChattersInGame.Twitch
     public class TwitchWebSocketManager
     {
 #if DEBUG
-        const string DEBUG_BROADCASTER_USERNAME_OVERRIDE = "admiralbahroo";
+        const string DEBUG_BROADCASTER_USERNAME_OVERRIDE = null;
 #endif
 
         public static TwitchWebSocketManager Instance { get; } = new TwitchWebSocketManager();
