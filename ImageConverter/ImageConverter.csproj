@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<BuildDir>$(SolutionDir)build/</BuildDir>
+		<TSPackageDir>$(BuildDir)/package/</TSPackageDir>
+		<TSPackagePluginDir>$(TSPackageDir)/plugins/$(SolutionName)/</TSPackagePluginDir>
+		<LibDir>$(TSPackagePluginDir)/lib/ImageConverter/</LibDir>
+		<StartupObject></StartupObject>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" GeneratePathProperty="true" />
+  </ItemGroup>
+
+	<Target Name="BuildTSPackage" AfterTargets="Build">
+		<MakeDir Directories="$(LibDir)" />
+
+		<Copy SourceFiles="$(OutDir)/$(AssemblyName).exe" DestinationFolder="$(LibDir)" />
+		<Copy SourceFiles="$(OutDir)/$(AssemblyName).dll" DestinationFolder="$(LibDir)" />
+		<Copy SourceFiles="$(OutDir)/$(AssemblyName).runtimeconfig.json" DestinationFolder="$(LibDir)" />
+
+		<Copy SourceFiles="$(OutDir)/$(AssemblyName).pdb" DestinationFolder="$(LibDir)" Condition="'$(Configuration)'=='Debug'" />
+		<Delete Files="$(LibDir)/$(AssemblyName).pdb" Condition="'$(Configuration)'=='Release'" />
+	</Target>
+	
+</Project>
